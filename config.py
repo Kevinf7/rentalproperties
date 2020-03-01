@@ -21,3 +21,6 @@ class Config(object):
 
     # Dev only so browser doesnt cache for CSS
     SEND_FILE_MAX_AGE_DEFAULT = 0
+
+    # Scrapy hub API key
+    SCRAPYHUB_APIKEY = os.environ.get('SCRAPYHUB_APIKEY')

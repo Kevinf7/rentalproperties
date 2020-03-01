@@ -4,6 +4,7 @@ from app.main.forms import SearchForm
 import pandas as pd
 from datetime import datetime, timedelta
 from authlib.client import OAuth2Session
+from app import client
 from bs4 import BeautifulSoup
 
 
@@ -127,3 +128,43 @@ def index():
         return render_template('main/results.html',data=df)
 
     return render_template('main/index.html',form=form)
+
+
+@bp.route('/other', methods=['GET'])
+def other():
+    # project id 417245 is the rental project in scrapy cloud
+    project = client.get_project(417245)
+
+    # get the spider which is called rental
+    spider = project.spiders.get('rental')
+
+    # get the most recent job's key
+    jobs_summary = spider.jobs.iter()
+    key = [j['key'] for j in jobs_summary][0]
+
+    # get the most recent job
+    job = client.get_job(key)
+
+    # retrieve items
+    items = job.items.iter()
+
+    # construct pandas dataframe and save to csv
+    df = pd.DataFrame(columns=[\
+    'Suburb','Status','Price','Home Type','Available','Occupants','Description','url'
+    ])
+
+    for item in items:
+        df = df.append({\
+            'Suburb': item['suburb'],\
+            'Status': item['status'],\
+            'Price': item['price'],\
+            'Home_Type': item['home_type'],\
+            'Available': item['available'],\
+            'Occupants': item['occupants'],\
+            'Description': item['description'],\
+            'url': item['url']
+        }, ignore_index=True)
+
+    df.to_csv(current_app.config['RENTAL_FOLDER'] / 'other.csv', index=False)
+
+    return render_template('main/other.html', data=df)
