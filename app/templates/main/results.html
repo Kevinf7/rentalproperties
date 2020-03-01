@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Rental property generator - results{% endblock %}
+
+{% block app_content %}
+<p><a href='{{ url_for('main.index') }}'>Go back to Search</a></p>
+
+<h2>Results</h2>
+
+<p>{{ data|length }} results returned</p>
+
+{% if data|length >= 1 %}
+    <p><a href="{{ url_for('static', filename='csv_download/domain.csv') }}"><i class="fas fa-file-csv"></i> Download Excel report (csv)</a></p>
+
+    <table class="table-stripe">
+    <tr>
+        <th>Headline</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Address</th>
+        <th>Bedroom</th>
+        <th>Bathroom</th>
+    </tr>
+    {% for key,value in data.iterrows() %}
+        <tr>
+            <td>{{ value['Headline'] }}</td>
+            <td>{{ value['Property type'] }}</td>
+            <td>{{ value['Price'] }}</td>
+            <td>{{ value['Display address'] }}</td>
+            <td>{{ value['Bedrooms'] | int }}</td>
+            <td>{{ value['Bathrooms'] | int }}</td>
+            <td><a href="{{ value['url'] }}" target="_blank">View listing</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endif %}
+
+{% endblock %}
