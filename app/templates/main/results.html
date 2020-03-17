@@ -9,7 +9,7 @@
 <p>{{ data|length }} results returned</p>
 
 {% if data|length >= 1 %}
-    <p><a href="{{ url_for('static', filename='csv_download/domain.csv') }}"><i class="fas fa-file-csv"></i> Download Excel report (csv)</a></p>
+    <p><a href="{{ url_for('static', filename='csv_download/' + filename) }}"><i class="fas fa-file-csv"></i> Download Excel report (csv)</a></p>
 
     <table class="table-stripe">
     <tr>

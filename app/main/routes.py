@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from authlib.client import OAuth2Session
 from app import client
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 
 def get_token():
@@ -124,8 +125,11 @@ def index():
                 'Advert contact': get_contact(get_data(data=j['listing']['advertiser'], key='contacts'))\
                 }, ignore_index=True)
 
-        df.to_csv(current_app.config['RENTAL_FOLDER'] / 'domain.csv', index=False)
-        return render_template('main/results.html',data=df)
+        # get current date time for filename
+        curr_dt = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = curr_dt + '_domain.csv'
+        df.to_csv(current_app.config['RENTAL_FOLDER'] / filename, index=False)
+        return render_template('main/results.html',data=df, filename=filename)
 
     return render_template('main/index.html',form=form)
 
