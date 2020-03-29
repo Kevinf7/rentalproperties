@@ -6,5 +6,4 @@ secret.txt
 runenv.bat
 .env
 __pycache__
-csv_download/*
-!csv_download/.keep
+csv_download/

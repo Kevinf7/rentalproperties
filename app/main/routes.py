@@ -7,6 +7,7 @@ from authlib.client import OAuth2Session
 from app import client
 from bs4 import BeautifulSoup
 from datetime import datetime
+from app.decorators import *
 
 
 def get_token():
@@ -53,6 +54,7 @@ def get_contact(contact):
 
 @bp.route('/')
 @bp.route('/index', methods=['GET','POST'])
+@login_required
 def index():
     form=SearchForm()
     if form.validate_on_submit():
@@ -135,6 +137,7 @@ def index():
 
 
 @bp.route('/other', methods=['GET'])
+@login_required
 def other():
     # project id 417245 is the rental project in scrapy cloud
     project = client.get_project(417245)
@@ -172,3 +175,9 @@ def other():
     df.to_csv(current_app.config['RENTAL_FOLDER'] / 'other.csv', index=False)
 
     return render_template('main/other.html', data=df)
+
+
+@bp.route('/logout', methods=['GET'])
+def logout():
+    session['logged_in'] = False
+    return redirect(url_for('auth.login'))

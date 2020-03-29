@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Rental property generator - Login{% endblock %}
+
+{% block app_content %}
+
+<div style="text-align: center;">
+<h2>Password</h2>
+<p>Please enter password to access this site</p>
+
+<form action="{{ url_for('auth.login') }}"  method="post">
+    {{ form.csrf_token }}
+
+    {% for error in form.password.errors %}
+        <span class="error-msg">[ {{ error }} ]</span>
+    {% endfor %}
+    {{ form.password }}
+    {{ form.submit }}
+
+</form>
+</div>
+{% endblock %}

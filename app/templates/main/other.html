@@ -4,7 +4,8 @@
 {% block app_content %}
 
 <h2>Other websites</h2>
-<p>Data is scraped from websites that do not have an API.</p>
+<p><img src="{{ url_for('static', filename='images/scrapy.png') }}" width="100"></p>
+<p>Data is scraped from websites that do not have an API using Scrapy.</p>
 <p>Currently Gayshare data is only for Newtown area.</p>
 
 <h3>Gayshare</h3>
@@ -40,5 +41,4 @@
     {% endfor %}
     </table>
 {% endif %}
-
 {% endblock %}

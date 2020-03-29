@@ -24,3 +24,6 @@ class Config(object):
 
     # Scrapy hub API key
     SCRAPYHUB_APIKEY = os.environ.get('SCRAPYHUB_APIKEY')
+
+    # Pass
+    SITE_PASS = os.environ.get('SITE_PASS')

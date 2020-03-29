@@ -3,7 +3,10 @@
 
 {% block app_content %}
 
-<h2>Search Domain</h2>
+<h2>
+    Search Domain
+    <img src="{{ url_for('static', filename='images/powered-by-domain-rgb.png') }}" width="120">
+</h2>
 <p><small><i>* denotes mandatory</i></small></p>
 <p>Search Domain website using the Domain API. Data retrieved is in real-time.</p>
 
@@ -45,6 +48,6 @@
 
         {{ form.submit }}
     </div>
-</form>
 
+</form>
 {% endblock %}

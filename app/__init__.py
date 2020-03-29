@@ -13,3 +13,6 @@ app.register_blueprint(main_bp)
 
 from app.sitemap import bp as sitemap_bp
 app.register_blueprint(sitemap_bp)
+
+from app.auth import bp as auth_bp
+app.register_blueprint(auth_bp)
