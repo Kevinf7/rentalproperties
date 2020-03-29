@@ -17,10 +17,10 @@ class Config(object):
     RENTAL_FOLDER = basedir / 'app/static/csv_download'
 
     # auto reload template without needing to restart Flask
-    TEMPLATES_AUTO_RELOAD = True
+    # TEMPLATES_AUTO_RELOAD = True
 
     # Dev only so browser doesnt cache for CSS
-    SEND_FILE_MAX_AGE_DEFAULT = 0
+    # SEND_FILE_MAX_AGE_DEFAULT = 0
 
     # Scrapy hub API key
     SCRAPYHUB_APIKEY = os.environ.get('SCRAPYHUB_APIKEY')
