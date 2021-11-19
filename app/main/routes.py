@@ -3,12 +3,16 @@ from app.main import bp
 from app.main.forms import SearchForm
 import pandas as pd
 from datetime import datetime, timedelta
-from authlib.client import OAuth2Session
+# from authlib.client import OAuth2Session
+# authlin version 13 +
+from authlib.integrations.requests_client import OAuth2Session
 from app import client
 from bs4 import BeautifulSoup
 from datetime import datetime
 from app.decorators import *
 
+
+# curl -X POST -u 'client_a2d1bf0b6857ae01a6f9ff352f3fbd39:secret_62134ebc40d8c82372c9021c75462529' -H "Content-Type: application/x-www-form-urlencoded" -d 'grant_type=client_credentials&scope=api_listings_read' 'https://auth.domain.com.au/v1/connect/token' 
 
 def get_token():
     scope='api_listings_read'
