@@ -3,8 +3,8 @@ from app.main import bp
 from app.main.forms import SearchForm
 import pandas as pd
 from datetime import datetime, timedelta
-# from authlib.client import OAuth2Session
-# authlin version 13 +
+
+# authlib version 13 +
 from authlib.integrations.requests_client import OAuth2Session
 from app import client
 from bs4 import BeautifulSoup
@@ -16,11 +16,12 @@ from app.decorators import *
 
 def get_token():
     scope='api_listings_read'
-    oas = OAuth2Session(current_app.config['DOMAIN_CLIENT_ID'], current_app.config['DOMAIN_CLIENT_SECRET'], scope=scope)
-    token = oas.fetch_access_token('https://auth.domain.com.au/v1/connect/token', grant_type='client_credentials')
+    client = OAuth2Session(current_app.config['DOMAIN_CLIENT_ID'], current_app.config['DOMAIN_CLIENT_SECRET'], scope=scope)
+    # token = client.fetch_access_token('https://auth.domain.com.au/v1/connect/token', grant_type='client_credentials')
     # now = datetime.now()
     # later = now + timedelta(seconds=token['expires_in']-900)
-    return token
+    resp = client.fetch_token('https://auth.domain.com.au/v1/connect/token')
+    return resp
 
 
 def get_session(token):
