@@ -15,12 +15,14 @@ from app.decorators import *
 
 def get_token():
     scope='api_listings_read'
+    authorization_response = 'https://rentprop.pythonanywhere.com'
     client = OAuth2Session(current_app.config['DOMAIN_CLIENT_ID'], current_app.config['DOMAIN_CLIENT_SECRET'], scope=scope)
     # token = client.fetch_access_token('https://auth.domain.com.au/v1/connect/token', grant_type='client_credentials')
     # now = datetime.now()
     # later = now + timedelta(seconds=token['expires_in']-900)
-    resp = client.fetch_token('https://auth.domain.com.au/v1/connect/token')
-    current_app.logger.info(resp.items())
+
+    resp = client.fetch_token('https://auth.domain.com.au/v1/connect/token', authorization_response=authorization_response)
+    # current_app.logger.info(resp.items())
     return resp
 
 
