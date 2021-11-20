@@ -27,3 +27,5 @@ class Config(object):
 
     # Pass
     SITE_PASS = os.environ.get('SITE_PASS')
+
+    BASEDIR = basedir

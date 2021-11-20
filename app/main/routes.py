@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request, current_app, session
+from flask import render_template, redirect, url_for, current_app, session
 from app.main import bp
 from app.main.forms import SearchForm
 import pandas as pd
@@ -8,7 +8,6 @@ from datetime import datetime, timedelta
 from authlib.integrations.requests_client import OAuth2Session
 from app import client
 from bs4 import BeautifulSoup
-from datetime import datetime
 from app.decorators import *
 
 
@@ -21,6 +20,7 @@ def get_token():
     # now = datetime.now()
     # later = now + timedelta(seconds=token['expires_in']-900)
     resp = client.fetch_token('https://auth.domain.com.au/v1/connect/token')
+    current_app.logger.info(resp.items())
     return resp
 
 

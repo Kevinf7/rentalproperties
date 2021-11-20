@@ -7,3 +7,4 @@ runenv.bat
 .env
 __pycache__
 csv_download/
+logs/
