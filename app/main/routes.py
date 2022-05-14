@@ -15,13 +15,12 @@ from app.decorators import *
 
 def get_token():
     scope='api_listings_read'
-    authorization_response = 'https://rentprop.pythonanywhere.com'
     client = OAuth2Session(current_app.config['DOMAIN_CLIENT_ID'], current_app.config['DOMAIN_CLIENT_SECRET'], scope=scope)
     # token = client.fetch_access_token('https://auth.domain.com.au/v1/connect/token', grant_type='client_credentials')
     # now = datetime.now()
     # later = now + timedelta(seconds=token['expires_in']-900)
 
-    resp = client.fetch_token('https://auth.domain.com.au/v1/connect/token', authorization_response=authorization_response)
+    resp = client.fetch_token('https://auth.domain.com.au/v1/connect/token')
     # current_app.logger.info(resp.items())
     return resp
 
@@ -57,6 +56,16 @@ def get_contact(contact):
         #list is empty
         return ''
     return con_str
+
+
+def get_pet(data):
+    if 'features' in data:
+        if 'PetsAllowed' in data['features']:
+            return 'Yes'
+        else:
+            return ''
+    else:
+        return ''
 
 
 @bp.route('/')
@@ -111,7 +120,7 @@ def index():
         # construct pandas dataframe and save to csv
         df = pd.DataFrame(columns=[\
         'Property type', 'Price', 'Suburb','Postcode','Display address','Bedrooms',\
-        'Bathrooms','Carspaces','Headline','Description',\
+        'Bathrooms','Carspaces','Pets allowed','Headline','Description',\
         'url','Advert type','Advert name','Advert contact'\
         ])
         json_resp = resp.json()
@@ -125,6 +134,7 @@ def index():
                 'Bedrooms': get_data(data=j['listing']['propertyDetails'], key='bedrooms'),\
                 'Bathrooms': get_data(data=j['listing']['propertyDetails'], key='bathrooms'),\
                 'Carspaces': get_data(data=j['listing']['propertyDetails'], key='carspaces'),\
+                'Pets allowed': get_pet(data=j['listing']['propertyDetails']),\
                 'Headline': get_data(data=j['listing'], key='headline'),\
                 'Description': BeautifulSoup(get_data(data=j['listing'], key='summaryDescription'),'html.parser').\
                     get_text().replace('\r','').replace('\n',' '),\
